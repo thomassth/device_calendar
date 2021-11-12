@@ -7,6 +7,9 @@ on:
   # Triggers the workflow on push or pull request events but only for the develop branch
   push:
     branches: [release, hotfix]
+  # Remove this before deploy
+  pull_request:
+    branches: [develop]
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
 
@@ -31,7 +34,8 @@ jobs:
           sed  -i "s/version.*/&-$GITHUB_RUN_ID/" pubspec.yaml
       - name: Fetch credentials for publish
         run: |
-          content=`cat ~/.pub-cache/credentials.json`
+          ls $PUB_CACHE
+          content= "cat $PUB_CACHE/credentials.json"
       - name: Publish package
         uses: sakebook/actions-flutter-pub-publisher@v1.3.1
         with:
