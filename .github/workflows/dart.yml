@@ -28,6 +28,16 @@ jobs:
       - run: dart --version
       - run: flutter --version
       - run: flutter test
+      - name: Edit pubspec.ymal for dev release
+        run: |
+          sed  -i "s/version.*/&-$GITHUB_RUN_ID/" pubspec.yaml
+      - name: Get Changelog Entry
+        id: changelog_reader
+        uses: mindsers/changelog-reader-action@v2.0.0
+      - name: Edit changelog.md for dev release
+        run: |
+          sed -i "s/##[*/&-$steps.changelog_reader.outputs.version/" changelog.md
+          echo changelog.md
       - name: iOS build
         run: |
           cd example
