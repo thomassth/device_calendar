@@ -36,7 +36,7 @@ jobs:
         uses: mindsers/changelog-reader-action@v2.0.0
       - name: Edit changelog.md for dev release
         run: |
-          sed -i "0,/\#\# */s//&[$steps.changelog_reader.outputs.version]/" CHANGELOG.md
+          sed -i "0,/\#\# */s//&[${{steps.changelog_reader.outputs.version}}]/" CHANGELOG.md
           cat CHANGELOG.md
 #       - name: iOS build
 #         run: |
