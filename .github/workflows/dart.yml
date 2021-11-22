@@ -16,7 +16,7 @@ on:
 jobs:
   test:
     name: Build test
-    runs-on: macos-latest
+    runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
 #       - uses: actions/setup-java@v1
@@ -36,7 +36,7 @@ jobs:
         uses: mindsers/changelog-reader-action@v2.0.0
       - name: Edit changelog.md for dev release
         run: |
-          sed -i "s/##[*/&-$steps.changelog_reader.outputs.version/" changelog.md
+          sed -i "0,/\#\# */s//&[$steps.changelog_reader.outputs.version]/" changelog.md
           echo changelog.md
 #       - name: iOS build
 #         run: |
