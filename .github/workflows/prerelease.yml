@@ -28,26 +28,14 @@ jobs:
         with:
           channel: "stable"
       - run: dart --version
-      - run: flutter --version
+      - run: flutter --version      
       - name: Edit pubspec.ymal for dev release
         run: |
           sed  -i "s/version.*/&-$GITHUB_RUN_ID/" pubspec.yaml
-      - name: Fetch credentials for publish
-        run: |
-          ls $PUB_CACHE
-          content= "cat $PUB_CACHE/credentials.json"
-      - name: Publish package
-        uses: sakebook/actions-flutter-pub-publisher@v1.3.1
-        with:
-          credential: content
-          flutter_package: true
-          skip_test: false
-          dry_run: true
       - name: Get Changelog Entry
         id: changelog_reader
         uses: mindsers/changelog-reader-action@v2.0.0
-      - name: Add entry to Github release
-        uses: softprops/action-gh-release@v1
-        with:
-          tag_name: ${{ steps.changelog_reader.outputs.version }}+${{ github.run_id }}
-          prerelease: true
+      - name: Edit changelog.md for dev release
+        run: |
+          sed -i "s/##[*/&-$steps.changelog_reader.outputs.version/" changelog.md
+          echo changelog.md
