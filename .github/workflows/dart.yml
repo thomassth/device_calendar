@@ -42,7 +42,7 @@ jobs:
       - name: Publish package
         uses: sakebook/actions-flutter-pub-publisher@v1.3.1
         with:
-          credential: "${{ secrets.CREDENTIALS }}"
+          credential: '${{ secrets.CREDENTIALS }}'
           flutter_package: true
           skip_test: false
 #       - name: iOS build
