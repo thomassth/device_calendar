@@ -38,6 +38,12 @@ jobs:
         run: |
           sed -i "0,/\#\# \[.*/s//## [${{steps.changelog_reader.outputs.version}}-$GITHUB_RUN_ID]/" CHANGELOG.md
           cat CHANGELOG.md
+          
+      - name: Publish package
+        run: |
+          mkdir -p $FLUTTER_HOME/.pub-cache
+          echo '${{ secrets.CREDENTIALS }}' >  $FLUTTER_HOME/.pub-cache/credentials.json
+          flutter pub publish
 #       - name: iOS build
 #         run: |
 #           cd example
