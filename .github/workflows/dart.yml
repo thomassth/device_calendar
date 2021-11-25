@@ -40,11 +40,11 @@ jobs:
           cat CHANGELOG.md
           
       - name: Publish package
-        run: |
-          cat <<EOF > $PUB_CACHE/credentials.json
-          ${{ secrets.CREDENTIALS }}
-          EOF
-          flutter pub publish
+        uses: sakebook/actions-flutter-pub-publisher@v1.3.1
+        with:
+          credential: "${{ secrets.CREDENTIALS }}"
+          flutter_package: true
+          skip_test: false
 #       - name: iOS build
 #         run: |
 #           cd example
