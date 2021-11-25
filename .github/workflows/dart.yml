@@ -41,8 +41,9 @@ jobs:
           
       - name: Publish package
         run: |
-          mkdir -p $FLUTTER_HOME/.pub-cache
-          echo '${{ secrets.CREDENTIALS }}' >  $FLUTTER_HOME/.pub-cache/credentials.json
+          cat <<EOF > $PUB_CACHE/credentials.json
+          ${{ secrets.CREDENTIALS }}
+          EOF
           flutter pub publish
 #       - name: iOS build
 #         run: |
